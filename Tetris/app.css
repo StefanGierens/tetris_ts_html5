@@ -1,0 +1,15 @@
+﻿body {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.disable-doubletap-to-zoom {
+    touch-action: none;
+}
+
+.card {
+    display : block;
+}
+
+.hide {
+    display : none;
+}

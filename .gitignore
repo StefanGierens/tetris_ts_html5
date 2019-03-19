@@ -3,3 +3,6 @@
 ################################################################################
 
 /Tetris/bin
+/Tetris/obj
+/packages/jquery.TypeScript.DefinitelyTyped.3.1.2
+/.vs
