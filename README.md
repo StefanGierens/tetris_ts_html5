@@ -1,3 +1,5 @@
 # tetris_ts_html5
-Tetris written in Typescript with HTML5 canvas element
+Tetris written in Typescript with HTML5 canvas element<br />
 IDE: Visual Studio 2017
+
+<a href="https://stefan-gierens.de/tetris/" target="blank">Play the game</a>
