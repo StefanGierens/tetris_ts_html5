@@ -85,11 +85,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="App.ts" />
-    <TypeScriptCompile Include="Board.ts" />
-    <TypeScriptCompile Include="BoardCanvas.ts" />
+    <TypeScriptCompile Include="ts\App.ts" />
+    <TypeScriptCompile Include="ts\Board.ts" />
+    <TypeScriptCompile Include="ts\BoardCanvas.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
-    <TypeScriptCompile Include="Tetromino.ts" />
+    <TypeScriptCompile Include="ts\Tetromino.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
