@@ -1,4 +1,5 @@
-﻿interface Button {
+﻿/** the interface for a button on the canvas */
+interface Button {
     x: number;
     y: number;
     dx: number;
@@ -47,12 +48,14 @@ class BoardCanvas {
         let changed = height != this.canvas.height;
         // draw field
         if (changed) {
+            // adjust the height, width and fieldsize
             this.ctx.fillStyle = Colors[Colors.Grey];
             this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
             this.canvas.height = height;
             this.canvas.width = Math.ceil(this.canvas.height / 2) * 1.5 ;
             this.fieldsize = this.canvas.height / this.board.numberRows;
         }
+        // draw the board
         for (let r = 0; r < this.board.numberRows; r++) {
             for (let c = 0; c < this.board.numberCols; c++) {
                 this.ctx.strokeRect(c * this.fieldsize, r * this.fieldsize, this.fieldsize, this.fieldsize);
@@ -105,10 +108,12 @@ class BoardCanvas {
         this.ctx.stroke();
     }
 
+    /** the height of the canvas is 80% of the page height */ 
     protected getCanvasHeight(): number {
         return Math.ceil(document.documentElement.clientHeight * .8);
     }
 
+    /** draw the buttons to the canvas */
     protected drawButtons(){
         let dx = this.board.numberCols * this.fieldsize;
         let dy = 15 * this.fieldsize;
@@ -121,6 +126,7 @@ class BoardCanvas {
         });
     }
 
+    /** the font size depends on the fieldsize */
     protected getFont(): string {
         if (this.fieldsize > 35)
             return "20px Segoe UI";
@@ -129,6 +135,10 @@ class BoardCanvas {
         return "10px Segoe UI";
     }
 
+    /**
+     * listen for clicks on buttons
+     * @param buttontype
+     */
     pressButton(buttontype: ButtonType): void {
         if (buttontype == ButtonType.Space)
             this.app.pressSpace();
@@ -142,6 +152,7 @@ class BoardCanvas {
             this.app.pressArrowUp();
     }
 
+    /** listen for mouse clicks on the buttons */
     protected doMouseDown = (event: MouseEvent) : void => {
         let x: number = event.x;
         let y: number = event.y;

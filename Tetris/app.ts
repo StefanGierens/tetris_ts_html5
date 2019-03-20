@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
+    // the canvas element for the game
     let canvas = document.getElementById('cnvs');
+    // update the scores in html 
     let ids = ['scoreSingle', 'scoreDouble', 'scoreTriple', 'scoreTetris', 'scorePerfectClear'];
     let scores = [Consts.scoreSingle, Consts.scoreDouble, Consts.scoreTriple, Consts.scoreTetris, Consts.scorePerfectClear];
     for (let i in ids) {
@@ -8,10 +10,15 @@
     if (canvas == undefined)
         return;
     var app = new App(<HTMLCanvasElement>canvas);
+    // listen for keyboard input
     document.addEventListener('keydown', function (event: KeyboardEvent) { app.keyboardInput(event) });
+    // start the game
     app.startGame();
 });
 
+/**
+ * the game statuses 
+ * */
 enum GameStatus {
     Init,
     Started,
@@ -27,6 +34,8 @@ enum GameStatus {
  *  global constants
  * */
 class Consts {
+    static readonly numberRows: number = 20;
+    static readonly numberCols: number = 10;
     static readonly startTimeoutInMs: number = 500;
     static readonly timeOutMinPerLevel: number = 20;
     static readonly newLevelSeconds: number = 100;
@@ -71,7 +80,7 @@ class App {
     }
 
     startGame() {
-        this.board = new Board();
+        this.board = new Board(Consts.numberRows, Consts.numberCols);
         this.boardCanvas = new BoardCanvas(<HTMLCanvasElement>this.canvas, this);
         this.loopInterval = setInterval(this.gameLoop, this.timeoutInMs);
         $("#btnSpace").click(e => this.pressSpace());
@@ -83,6 +92,7 @@ class App {
         setInterval(this.timerLoop, 1000);  // every second
     }
 
+    /** The main game loop */
     protected gameLoop = () => {
         if (!this.isStarted()) {
             this.boardCanvas.draw();
@@ -115,6 +125,8 @@ class App {
         }
     }
 
+    /**  the timer loop, to encrease the level
+     * */
     protected timerLoop = () => {
         if (!this.isStarted()) {
             return;
@@ -129,10 +141,12 @@ class App {
         }
     }
 
+    /** is the game started? check the status */
     isStarted(): boolean {
         return [GameStatus.Started, GameStatus.Single, GameStatus.Double, GameStatus.Triple, GameStatus.Tetris].some(e => e == this.gameStatus);
     }
 
+    /** store the Highscore in the local storage of the browser */
     protected storeHighscore() {
         if (localStorage.maxPoints == undefined) {
             localStorage.maxPoints = this.points;
@@ -146,18 +160,21 @@ class App {
         }
     }
 
+    /** the max. rows from local storage */
     getMaxRows(): number {
         if (localStorage.maxRows == undefined)
             return 0;
         return localStorage.maxRows;
     }
 
+    /** the max. points from local storage */
     getMaxPoints(): number {
         if (localStorage.maxPoints == undefined)
             return 0;
         return localStorage.maxPoints;
     }
 
+    /** move left */
     pressArrowLeft(): void {
         if (this.isStarted()) {
             this.board.tetrominoMoveLeft();
@@ -165,6 +182,7 @@ class App {
         }
     }
 
+    /** move right */
     pressArrowRight(): void {
         if (this.isStarted()) {
             this.board.tetrominoMoveRight();
@@ -172,6 +190,7 @@ class App {
         }
     }
 
+    /** move up (rotate) */
     pressArrowUp(): void {
         if (this.isStarted()) {
             this.board.tetrominoRotate();
@@ -179,6 +198,7 @@ class App {
         }
     }
 
+    /** move down */
     pressArrowDown(): void {
         if (this.isStarted()) {
             this.board.tetrominoMoveDown();
@@ -186,6 +206,7 @@ class App {
         }
     }
 
+    /** space pressed */
     pressSpace(): void {
         {
             if (this.gameStatus == GameStatus.Init)
@@ -197,7 +218,7 @@ class App {
         }
     }
 
-    
+    /** handle keyboard input event */
     keyboardInput(event: KeyboardEvent) {
         // press left arrow
         if (event.keyCode == 37)
@@ -217,7 +238,7 @@ class App {
     }
 
     /**
-     *  map rows to points and set status
+     *  map rows to score and set status
      * @param rows
      */
     protected rowsToScore(rows: number): number {

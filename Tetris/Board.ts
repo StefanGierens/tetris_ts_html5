@@ -12,7 +12,7 @@ enum Colors {
     Black
 }
 
-/** one Field on the board */
+/** one field on the board */
 interface Field  {
     c: number;
     r: number;
@@ -24,19 +24,24 @@ interface Field  {
  * the Board class, main game logic implemented in here
  * */
 class Board {
-    numberRows: number = 20;
-    numberCols: number = 10;
+    numberRows: number;
+    numberCols: number;
     protected heap: Field[][];
 
+    // the actual tetromino
     protected tetromino: Tetromino;
+    // the next tetromino
     protected nextTetromino: Tetromino;
     // the color, for empty fields
     readonly blankColor: Colors = Colors.Grey;
 
-    constructor() {
+    constructor(numberRows: number, numberCols: number) {
+        this.numberRows = numberRows;
+        this.numberCols = numberCols;
         this.initHeap();
     }
 
+    /** init a blank heap */
     initHeap() {
         this.heap = [];
         this.tetromino = undefined;
@@ -47,7 +52,12 @@ class Board {
             }
         }
     }
-     
+
+    /**
+    * get color of a field
+    * @param x
+    * @param y
+    */
     getColor(x: number, y: number): string {
         if (this.tetromino) {
             if (this.tetromino.isInside({ x, y }))
@@ -58,12 +68,21 @@ class Board {
         else return Colors[this.getRow(y)[x].color];
     }
 
+    /**
+     * get a row from the heap
+     * @param r  number of row (0-based)
+     */
     protected getRow(r: number) {
         if (r < 0 || r >= this.heap.length)
             return undefined;
         return this.heap[r];
     }
 
+    /**
+     * set a point to the heap
+     * @param p the point
+     * @param color the new color
+     */
     protected setPointToHeap(p: Point, color: Colors) {
         let r = this.getRow(p.y);
         r[p.x].color = color;
@@ -103,7 +122,7 @@ class Board {
         return count;
     }
 
-    /** insert a new tetromino to the board */
+    /** insert a new tetromino to the board and init the next tetromino */
     newTetromino(): boolean {
         if (this.nextTetromino == undefined) {
             this.tetromino = Tetromino.NewTetromino();
@@ -118,10 +137,12 @@ class Board {
         return true;
     }
 
+    /** returns the next tetromino */
     getNextTetromino(): Tetromino {
         return this.nextTetromino;
     }
 
+    /** is the heap totally clear again? */
     isPerfectClear(): boolean {
         // start on bottom line
         for (let r = this.numberRows - 1; r >= 0; r--) {
@@ -133,7 +154,10 @@ class Board {
         return true;
     }
 
-
+    /**
+     * does the new tetromino fits to the board?
+     * @param tetromino
+     */
     protected fitsToBoard(tetromino : Tetromino): boolean  {
         let b: boolean = true;
         if (tetromino != undefined) {
@@ -153,6 +177,7 @@ class Board {
         return false;
     }
 
+    /** can the actual tetronino move left? */
     protected canMoveLeft(): boolean {
         let b: boolean = true;
         if (this.tetromino != undefined) {
@@ -162,6 +187,7 @@ class Board {
         return false;
     }
 
+    /** can the actual tetronino move right? */
     protected canMoveRight(): boolean {
         let b: boolean = true;
         if (this.tetromino != undefined) {
@@ -171,31 +197,36 @@ class Board {
         return false;
     }
 
+    /** can the actual tetronino rotate? */
     protected canRotate(): boolean {
         let b: boolean = true;
         if (this.tetromino != undefined) {
+            // calc the new points after rotation and check if the fields are empty
             this.tetromino.rotatePoints(this.numberCols).forEach(p => { if (this.fieldOccupied(p.x, p.y)) b = false; });
             return b;
         }
         return false;
     }
 
-
+    /** move the actual tetronino left, if possible  */
     tetrominoMoveLeft() {
         if (this.tetromino != undefined && this.canMoveLeft())
             this.tetromino.moveLeft();
     }
 
+    /** move the actual tetronino right, if possible  */
     tetrominoMoveRight() {
         if (this.tetromino != undefined && this.canMoveRight())
             this.tetromino.moveRight();
     }
 
+    /** move the actual tetronino down, if possible  */
     tetrominoMoveDown() {
         if (this.tetromino != undefined && this.canMoveDown())
             this.tetromino.moveDown();
     }
 
+    /** rotate the actual tetronino, if possible  */
     tetrominoRotate() {
         if (this.tetromino != undefined && this.canRotate())
             this.tetromino.rotate(this.numberCols);

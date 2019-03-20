@@ -38,6 +38,8 @@ var GameStatus;
 var Consts = (function () {
     function Consts() {
     }
+    Consts.numberRows = 20;
+    Consts.numberCols = 10;
     Consts.startTimeoutInMs = 500;
     Consts.timeOutMinPerLevel = 20;
     Consts.newLevelSeconds = 100;
@@ -117,7 +119,7 @@ var App = (function () {
     };
     App.prototype.startGame = function () {
         var _this = this;
-        this.board = new Board();
+        this.board = new Board(Consts.numberRows, Consts.numberCols);
         this.boardCanvas = new BoardCanvas(this.canvas, this);
         this.loopInterval = setInterval(this.gameLoop, this.timeoutInMs);
         $("#btnSpace").click(function (e) { return _this.pressSpace(); });
@@ -234,10 +236,10 @@ var Colors;
     Colors[Colors["Black"] = 9] = "Black";
 })(Colors || (Colors = {}));
 var Board = (function () {
-    function Board() {
-        this.numberRows = 20;
-        this.numberCols = 10;
+    function Board(numberRows, numberCols) {
         this.blankColor = Colors.Grey;
+        this.numberRows = numberRows;
+        this.numberCols = numberCols;
         this.initHeap();
     }
     Board.prototype.initHeap = function () {

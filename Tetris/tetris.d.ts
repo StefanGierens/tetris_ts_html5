@@ -9,6 +9,8 @@ declare enum GameStatus {
     Tetris = 7
 }
 declare class Consts {
+    static readonly numberRows: number;
+    static readonly numberCols: number;
     static readonly startTimeoutInMs: number;
     static readonly timeOutMinPerLevel: number;
     static readonly newLevelSeconds: number;
@@ -75,7 +77,7 @@ declare class Board {
     protected tetromino: Tetromino;
     protected nextTetromino: Tetromino;
     readonly blankColor: Colors;
-    constructor();
+    constructor(numberRows: number, numberCols: number);
     initHeap(): void;
     getColor(x: number, y: number): string;
     protected getRow(r: number): Field[];
