@@ -2,4 +2,4 @@
 Tetris written in Typescript with HTML5 canvas element<br />
 IDE: Visual Studio 2017
 
-<a href="https://stefan-gierens.de/tetris/" target="blank">Play the game</a>
+<a href="https://stefan-gierens.de/tetris/">Play the game</a>
