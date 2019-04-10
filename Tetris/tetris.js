@@ -417,10 +417,8 @@ var BoardCanvas = (function () {
     function BoardCanvas(canvas, app) {
         var _this = this;
         this.doMouseDown = function (event) {
-            var x = event.x;
-            var y = event.y;
-            x -= _this.canvas.offsetLeft;
-            y -= _this.canvas.offsetTop;
+            var x = event.offsetX;
+            var y = event.offsetY;
             var dx = _this.board.numberCols * _this.fieldsize;
             var dy = 15 * _this.fieldsize;
             for (var _i = 0, _a = _this.buttons; _i < _a.length; _i++) {

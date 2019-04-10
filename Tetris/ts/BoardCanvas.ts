@@ -154,10 +154,8 @@ class BoardCanvas {
 
     /** listen for mouse clicks on the buttons */
     protected doMouseDown = (event: MouseEvent) : void => {
-        let x: number = event.x;
-        let y: number = event.y;
-        x -= this.canvas.offsetLeft;
-        y -= this.canvas.offsetTop;
+        let x: number = event.offsetX;
+        let y: number = event.offsetY;
         let dx = this.board.numberCols * this.fieldsize;
         let dy = 15 * this.fieldsize;
 
