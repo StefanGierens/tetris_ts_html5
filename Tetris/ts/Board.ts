@@ -167,7 +167,7 @@ class Board {
         return false;
     }
 
-    /** can the actual tetronino move down? */
+    /** can the actual tetromino move down? */
     canMoveDown(): boolean {
         let b: boolean = true;
         if (this.tetromino != undefined) {
@@ -177,7 +177,7 @@ class Board {
         return false;
     }
 
-    /** can the actual tetronino move left? */
+    /** can the actual tetromino move left? */
     protected canMoveLeft(): boolean {
         let b: boolean = true;
         if (this.tetromino != undefined) {
@@ -187,7 +187,7 @@ class Board {
         return false;
     }
 
-    /** can the actual tetronino move right? */
+    /** can the actual tetromino move right? */
     protected canMoveRight(): boolean {
         let b: boolean = true;
         if (this.tetromino != undefined) {
@@ -197,7 +197,7 @@ class Board {
         return false;
     }
 
-    /** can the actual tetronino rotate? */
+    /** can the actual tetromino rotate? */
     protected canRotate(): boolean {
         let b: boolean = true;
         if (this.tetromino != undefined) {
@@ -208,25 +208,25 @@ class Board {
         return false;
     }
 
-    /** move the actual tetronino left, if possible  */
+    /** move the actual tetromino left, if possible  */
     tetrominoMoveLeft() {
         if (this.tetromino != undefined && this.canMoveLeft())
             this.tetromino.moveLeft();
     }
 
-    /** move the actual tetronino right, if possible  */
+    /** move the actual tetromino right, if possible  */
     tetrominoMoveRight() {
         if (this.tetromino != undefined && this.canMoveRight())
             this.tetromino.moveRight();
     }
 
-    /** move the actual tetronino down, if possible  */
+    /** move the actual tetromino down, if possible  */
     tetrominoMoveDown() {
         if (this.tetromino != undefined && this.canMoveDown())
             this.tetromino.moveDown();
     }
 
-    /** rotate the actual tetronino, if possible  */
+    /** rotate the actual tetromino, if possible  */
     tetrominoRotate() {
         if (this.tetromino != undefined && this.canRotate())
             this.tetromino.rotate(this.numberCols);

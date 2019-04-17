@@ -50,6 +50,7 @@ declare class App {
     pressArrowUp(): void;
     pressArrowDown(): void;
     pressSpace(): void;
+    restart(): void;
     keyboardInput(event: KeyboardEvent): void;
     protected rowsToScore(rows: number): number;
 }

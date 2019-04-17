@@ -208,14 +208,23 @@ class App {
 
     /** space pressed */
     pressSpace(): void {
-        {
-            if (this.gameStatus == GameStatus.Init)
-                this.gameStatus = GameStatus.Started;
-            else if (this.isStarted())
-                this.gameStatus = GameStatus.Paused;
-            else if (this.gameStatus == GameStatus.Paused)
-                this.gameStatus = GameStatus.Started;
-        }
+        if (this.gameStatus == GameStatus.Init)
+            this.gameStatus = GameStatus.Started;
+        else if (this.isStarted())
+            this.gameStatus = GameStatus.Paused;
+        else if (this.gameStatus == GameStatus.Paused)
+            this.gameStatus = GameStatus.Started;
+    }
+
+    restart(): void {
+        this.rowsDeleted = 0;
+        this.points = 0;
+        this.wait = false;
+        this.counter = 0;
+        this.level = 1;
+        this.timeoutInMs = Consts.startTimeoutInMs;
+        this.gameStatus = GameStatus.Init;
+        this.board = new Board(Consts.numberRows, Consts.numberCols);
     }
 
     /** handle keyboard input event */
@@ -239,8 +248,11 @@ class App {
                 break;
             // press space bar
             case 32:
-                this.pressSpace();
+                if (event.ctrlKey)
+                    this.restart();
+                else this.pressSpace();
                 break;
+            //
         }
     }
 
