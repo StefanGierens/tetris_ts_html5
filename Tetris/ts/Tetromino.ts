@@ -57,21 +57,24 @@ abstract class Tetromino {
      */
     static NewTetromino(): Tetromino {
         var num = Math.floor(Math.random() * 7);
-        if (num == 0)
-            return new SquareTetromino();
-        else if (num == 1)
-            return new StraitTetromino();
-        else if (num == 2)
-            return new LTetromino();
-        else if (num == 3)
-            return new JTetromino();
-        else if (num == 4)
-            return new STetromino();
-        else if (num == 5)
-            return new ZTetromino();
-        else if (num == 6)
-            return new TTetromino();
-        throw new Error('no Tetromino');
+        switch (num) {
+            case 0:
+                return new SquareTetromino();
+            case 1:
+                return new StraitTetromino();
+            case 2:
+                return new LTetromino();
+            case 3:
+                return new JTetromino();
+            case 4:
+                return new STetromino();
+            case 5:
+                return new ZTetromino();
+            case 6:
+                return new TTetromino();
+            default:
+                throw new Error('no Tetromino');
+        }
     }
 }
 

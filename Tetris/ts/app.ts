@@ -9,7 +9,7 @@
     }
     if (canvas == undefined)
         return;
-    var app = new App(<HTMLCanvasElement>canvas);
+    let app = new App(<HTMLCanvasElement>canvas);
     // listen for keyboard input
     document.addEventListener('keydown', function (event: KeyboardEvent) { app.keyboardInput(event) });
     // start the game
@@ -125,7 +125,7 @@ class App {
         }
     }
 
-    /**  the timer loop, to encrease the level
+    /**  the timer loop, to increase the level
      * */
     protected timerLoop = () => {
         if (!this.isStarted()) {
@@ -220,21 +220,28 @@ class App {
 
     /** handle keyboard input event */
     keyboardInput(event: KeyboardEvent) {
-        // press left arrow
-        if (event.keyCode == 37)
-            this.pressArrowLeft();
-        // press up arrow
-        else if (event.keyCode == 38)
-            this.pressArrowUp();
-        // press right arrow
-        else if (event.keyCode == 39)
-            this.pressArrowRight();
-        // press down arrow
-        else if (event.keyCode == 40)
-            this.pressArrowDown();
-        // press space bar
-        else if (event.keyCode == 32)
-            this.pressSpace();
+        switch (event.keyCode) {
+            // press left arrow
+            case 37:
+                this.pressArrowLeft();
+                break;
+            // press up arrow          
+            case 38:
+                this.pressArrowUp();
+                break;
+            // press right arrow
+            case 39:
+                this.pressArrowRight();
+                break;
+            // press down arrow
+            case 40:
+                this.pressArrowDown();
+                break;
+            // press space bar
+            case 32:
+                this.pressSpace();
+                break;
+        }
     }
 
     /**
@@ -242,21 +249,19 @@ class App {
      * @param rows
      */
     protected rowsToScore(rows: number): number {
-        if (rows == 1) {
-            this.gameStatus = GameStatus.Single;
-            return Consts.scoreSingle;
-        }
-        if (rows == 2) {
-            this.gameStatus = GameStatus.Double;
-            return Consts.scoreDouble;
-        }
-        if (rows == 3) {
-            this.gameStatus = GameStatus.Triple;
-            return Consts.scoreTriple;
-        }
-        if (rows == 4) {
-            this.gameStatus = GameStatus.Tetris;
-            return Consts.scoreTetris;
+        switch (rows) {
+            case 1:
+                this.gameStatus = GameStatus.Single;
+                return Consts.scoreSingle;
+            case 2:
+                this.gameStatus = GameStatus.Double;
+                return Consts.scoreDouble;
+            case 3:
+                this.gameStatus = GameStatus.Triple;
+                return Consts.scoreTriple;
+            case 4:
+                this.gameStatus = GameStatus.Tetris;
+                return Consts.scoreTetris;
         }
         return 0;
     }

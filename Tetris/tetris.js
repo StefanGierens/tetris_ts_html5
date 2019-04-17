@@ -190,33 +190,38 @@ var App = (function () {
         }
     };
     App.prototype.keyboardInput = function (event) {
-        if (event.keyCode == 37)
-            this.pressArrowLeft();
-        else if (event.keyCode == 38)
-            this.pressArrowUp();
-        else if (event.keyCode == 39)
-            this.pressArrowRight();
-        else if (event.keyCode == 40)
-            this.pressArrowDown();
-        else if (event.keyCode == 32)
-            this.pressSpace();
+        switch (event.keyCode) {
+            case 37:
+                this.pressArrowLeft();
+                break;
+            case 38:
+                this.pressArrowUp();
+                break;
+            case 39:
+                this.pressArrowRight();
+                break;
+            case 40:
+                this.pressArrowDown();
+                break;
+            case 32:
+                this.pressSpace();
+                break;
+        }
     };
     App.prototype.rowsToScore = function (rows) {
-        if (rows == 1) {
-            this.gameStatus = GameStatus.Single;
-            return Consts.scoreSingle;
-        }
-        if (rows == 2) {
-            this.gameStatus = GameStatus.Double;
-            return Consts.scoreDouble;
-        }
-        if (rows == 3) {
-            this.gameStatus = GameStatus.Triple;
-            return Consts.scoreTriple;
-        }
-        if (rows == 4) {
-            this.gameStatus = GameStatus.Tetris;
-            return Consts.scoreTetris;
+        switch (rows) {
+            case 1:
+                this.gameStatus = GameStatus.Single;
+                return Consts.scoreSingle;
+            case 2:
+                this.gameStatus = GameStatus.Double;
+                return Consts.scoreDouble;
+            case 3:
+                this.gameStatus = GameStatus.Triple;
+                return Consts.scoreTriple;
+            case 4:
+                this.gameStatus = GameStatus.Tetris;
+                return Consts.scoreTetris;
         }
         return 0;
     };
@@ -567,21 +572,24 @@ var Tetromino = (function () {
     };
     Tetromino.NewTetromino = function () {
         var num = Math.floor(Math.random() * 7);
-        if (num == 0)
-            return new SquareTetromino();
-        else if (num == 1)
-            return new StraitTetromino();
-        else if (num == 2)
-            return new LTetromino();
-        else if (num == 3)
-            return new JTetromino();
-        else if (num == 4)
-            return new STetromino();
-        else if (num == 5)
-            return new ZTetromino();
-        else if (num == 6)
-            return new TTetromino();
-        throw new Error('no Tetromino');
+        switch (num) {
+            case 0:
+                return new SquareTetromino();
+            case 1:
+                return new StraitTetromino();
+            case 2:
+                return new LTetromino();
+            case 3:
+                return new JTetromino();
+            case 4:
+                return new STetromino();
+            case 5:
+                return new ZTetromino();
+            case 6:
+                return new TTetromino();
+            default:
+                throw new Error('no Tetromino');
+        }
     };
     return Tetromino;
 }());
