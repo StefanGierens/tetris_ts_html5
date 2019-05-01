@@ -30,7 +30,6 @@ class BoardCanvas {
     constructor(canvas: HTMLCanvasElement,app: App) {
         this.canvas = canvas;
         this.app = app;
-        this.board = app.getBoard();
         this.ctx = canvas.getContext("2d");
         this.canvas.addEventListener("mousedown", this.doMouseDown, false);
         this.canvas.addEventListener("touchstart", this.doMouseDown, false);
@@ -41,6 +40,10 @@ class BoardCanvas {
         this.buttons.push({ x: 2, y: 2, dx: 1, dy: 1, text: "\u2193", desc: "arrow down", type: ButtonType.ArrowDown });
         this.buttons.push({ x: 3, y: 2, dx: 1, dy: 1, text: "\u2192", desc: "arrow right", type: ButtonType.ArrowRight });
         this.buttons.push({ x: 1, y: 4, dx: 3, dy: 1, text: "SPACE", desc: "SPACE", type: ButtonType.Space });
+    }
+
+    initBoard(board: Board) {
+        this.board = board;
     }
 
     draw() {

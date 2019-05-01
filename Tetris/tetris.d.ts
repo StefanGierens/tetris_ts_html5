@@ -123,6 +123,7 @@ declare class BoardCanvas {
     protected ctx: CanvasRenderingContext2D;
     protected buttons: Button[];
     constructor(canvas: HTMLCanvasElement, app: App);
+    initBoard(board: Board): void;
     draw(): void;
     protected getCanvasHeight(): number;
     protected drawButtons(): void;

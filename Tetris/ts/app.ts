@@ -82,6 +82,7 @@ class App {
     startGame() {
         this.board = new Board(Consts.numberRows, Consts.numberCols);
         this.boardCanvas = new BoardCanvas(<HTMLCanvasElement>this.canvas, this);
+        this.boardCanvas.initBoard(this.board);
         this.loopInterval = setInterval(this.gameLoop, this.timeoutInMs);
         $("#btnSpace").click(e => this.pressSpace());
         $("#btnUp").click(e => this.pressArrowUp());
@@ -225,6 +226,7 @@ class App {
         this.timeoutInMs = Consts.startTimeoutInMs;
         this.gameStatus = GameStatus.Init;
         this.board = new Board(Consts.numberRows, Consts.numberCols);
+        this.boardCanvas.initBoard(this.board);
     }
 
     /** handle keyboard input event */
@@ -248,11 +250,12 @@ class App {
                 break;
             // press space bar
             case 32:
-                if (event.ctrlKey)
-                    this.restart();
-                else this.pressSpace();
+                this.pressSpace();
                 break;
-            //
+            // press F4
+            case 115:
+                this.restart();
+                break;
         }
     }
 

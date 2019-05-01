@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -121,6 +121,7 @@ var App = (function () {
         var _this = this;
         this.board = new Board(Consts.numberRows, Consts.numberCols);
         this.boardCanvas = new BoardCanvas(this.canvas, this);
+        this.boardCanvas.initBoard(this.board);
         this.loopInterval = setInterval(this.gameLoop, this.timeoutInMs);
         $("#btnSpace").click(function (e) { return _this.pressSpace(); });
         $("#btnUp").click(function (e) { return _this.pressArrowUp(); });
@@ -196,6 +197,7 @@ var App = (function () {
         this.timeoutInMs = Consts.startTimeoutInMs;
         this.gameStatus = GameStatus.Init;
         this.board = new Board(Consts.numberRows, Consts.numberCols);
+        this.boardCanvas.initBoard(this.board);
     };
     App.prototype.keyboardInput = function (event) {
         switch (event.keyCode) {
@@ -212,10 +214,10 @@ var App = (function () {
                 this.pressArrowDown();
                 break;
             case 32:
-                if (event.ctrlKey)
-                    this.restart();
-                else
-                    this.pressSpace();
+                this.pressSpace();
+                break;
+            case 115:
+                this.restart();
                 break;
         }
     };
@@ -446,7 +448,6 @@ var BoardCanvas = (function () {
         };
         this.canvas = canvas;
         this.app = app;
-        this.board = app.getBoard();
         this.ctx = canvas.getContext("2d");
         this.canvas.addEventListener("mousedown", this.doMouseDown, false);
         this.canvas.addEventListener("touchstart", this.doMouseDown, false);
@@ -457,6 +458,9 @@ var BoardCanvas = (function () {
         this.buttons.push({ x: 3, y: 2, dx: 1, dy: 1, text: "\u2192", desc: "arrow right", type: ButtonType.ArrowRight });
         this.buttons.push({ x: 1, y: 4, dx: 3, dy: 1, text: "SPACE", desc: "SPACE", type: ButtonType.Space });
     }
+    BoardCanvas.prototype.initBoard = function (board) {
+        this.board = board;
+    };
     BoardCanvas.prototype.draw = function () {
         var height = this.getCanvasHeight();
         var changed = height != this.canvas.height;
